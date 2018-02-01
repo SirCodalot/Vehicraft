@@ -1,0 +1,14 @@
+main: Vehicraft.Loader
+name: Vehicraft
+version: 3.0
+author: SirCodalot
+depend: [Vehicles]
+softdepend: [Vault]
+description: Custom Vehicles Recipes
+
+commands:
+  vehicraft:
+    description: Manage Vehicraft Objects
+    aliases: [vhcraft, vhc]
+  vehicraftvault:
+    description: Check if the plugin is hooked into vault
