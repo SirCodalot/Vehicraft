@@ -37,7 +37,19 @@ public class SignEvents implements Listener {
             return;
         }
 
-        Recipe recipe = Recipe.getRecipe(event.getLine(1), VehicleType.valueOf(event.getLine(2)));
+        VehicleType type;
+
+        // Checking if the type is invalid.
+        try {
+            type = VehicleType.valueOf(event.getLine(2));
+        } catch(IllegalArgumentException e) {
+            Messages.CMD_INVALID_TYPE.sendTo(player);
+            event.getBlock().breakNaturally();
+            return;
+        }
+
+
+        Recipe recipe = Recipe.getRecipe(event.getLine(1), type);
 
         if (recipe == null) {
             Messages.CMD_INVALID_RECIPE.sendTo(player);
@@ -84,7 +96,7 @@ public class SignEvents implements Listener {
 
         Sign sign = (Sign) event.getClickedBlock().getState();
 
-        if (!sign.getLine(0).contains("Vehicraft")) return;
+        if (!ChatColor.stripColor(sign.getLine(0)).equalsIgnoreCase("[Vehicraft]")) return;
 
         if (!Permissions.SIGN_INTERACT.hasPermission(player)) {
             Messages.SIGN_INTERACT_NO_PERMISSION.sendTo(player);
@@ -130,7 +142,7 @@ public class SignEvents implements Listener {
 
         Sign sign = (Sign) event.getBlock().getState();
 
-        if (!sign.getLine(0).contains("Vehicraft")) return;
+        if (!ChatColor.stripColor(sign.getLine(0)).equalsIgnoreCase("[Vehicraft]")) return;
 
         if (!Permissions.SIGN_BREAK.hasPermission(player) || !player.isSneaking()) event.setCancelled(true);
     }

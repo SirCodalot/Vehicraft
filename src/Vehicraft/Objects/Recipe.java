@@ -21,7 +21,7 @@ public class Recipe {
 
     // Static lists
     public static ArrayList<Recipe> recipes = new ArrayList<>();
-    private static ArrayList<Inventory> editors = new ArrayList<>(), previews = new ArrayList<>();
+    public static ArrayList<Inventory> editors = new ArrayList<>(), previews = new ArrayList<>();
 
     private static FileConfiguration cf = Loader.getInstance().getConfig();
 
