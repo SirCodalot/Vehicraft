@@ -4,16 +4,17 @@ import Vehicraft.Setup.Permissions;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class tabVehicraft implements org.bukkit.command.TabCompleter {
+public class TabVehicraft implements org.bukkit.command.TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
 
-        return new ArrayList<String>(){{
+        ArrayList<String> arguments =  new ArrayList<String>(){{
             if (sender instanceof Player) {
                 // Player usages with permissions
                 Player player = (Player) sender;
@@ -32,6 +33,9 @@ public class tabVehicraft implements org.bukkit.command.TabCompleter {
                     add("preview");
                     add("recipe");
                 }
+                if (Permissions.COMMAND_VR_UPDATES.hasPermission(player)) {
+                    add("updates");
+                }
             } else {
                 // Console usages
                 add("?");
@@ -43,8 +47,13 @@ public class tabVehicraft implements org.bukkit.command.TabCompleter {
                 add("edit");
                 add("preview");
                 add("recipe");
+                add("updates");
             }
         }};
 
+        ArrayList<String> matches = new ArrayList<>();
+        StringUtil.copyPartialMatches(args[0].toLowerCase(), arguments, matches);
+
+        return matches;
     }
 }

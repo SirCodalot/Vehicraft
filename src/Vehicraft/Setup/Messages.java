@@ -1,5 +1,6 @@
 package Vehicraft.Setup;
 
+import Vehicraft.Loader;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -16,6 +17,9 @@ public enum Messages {
     CMD_INVALID_RECIPE(PREFIX.getMessage() + "&cInvalid recipe."),
     CMD_USAGE(PREFIX.getMessage() + "Usages:"),
     CMD_INVALID_VEHICLE(PREFIX.getMessage() + "&cInvalid vehicle."),
+
+    UPDATE_LATEST(PREFIX.getMessage() + "You are using the latest version of Vehicraft!"),
+    UPDATE_FOUND(PREFIX.getMessage() + "An update was found! Get it from: &a&n" + Loader.updater.getResourceURL()),
 
     SIGN_CREATE_NO_PERMISSION(PREFIX.getMessage() + "&cYou don't have permission to create this sign."),
     SIGN_INTERACT_NO_PERMISSION(PREFIX.getMessage() + "&cYou don't have permission to interact with this sign."),

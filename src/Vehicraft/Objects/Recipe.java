@@ -152,16 +152,21 @@ public class Recipe {
         Loads every recipe from the config file.
     */
     public static void loadRecipes() {
+
         if (cf.getConfigurationSection("Recipes") == null) return;
 
-        for (String s : cf.getConfigurationSection("Recipes").getKeys(false)) new Recipe(s);
+        cf.getConfigurationSection("Recipes").getKeys(false).forEach(Recipe::new);
     }
 
     /*
         Finds and returns a certain recipe using it's name and it's type.
     */
     public static Recipe getRecipe(String name, VehicleType type) {
-        for (Recipe recipe : recipes) if (recipe.name.equalsIgnoreCase(name) && recipe.type == type) return recipe;
+        for (Recipe recipe : recipes)
+            if (recipe.name.equalsIgnoreCase(name) && recipe.type == type) {
+                return recipe;
+            }
+
         return null;
     }
 
@@ -169,7 +174,10 @@ public class Recipe {
         Finds and returns a certain recipe using it's editor menu.
     */
     public static Recipe getRecipeByEditor(Inventory inventory) {
-        for (Recipe recipe : recipes) if (recipe.editor == inventory) return recipe;
+        for (Recipe recipe : recipes) if (recipe.editor == inventory) {
+            return recipe;
+        }
+
         return null;
     }
 
@@ -177,7 +185,10 @@ public class Recipe {
         Finds and returns a certain recipe using it's result.
     */
     public static Recipe getRecipeByResult(ItemStack itemStack) {
-        for (Recipe recipe : recipes) if (recipe.result.isSimilar(itemStack)) return recipe;
+        for (Recipe recipe : recipes) if (recipe.result.isSimilar(itemStack)) {
+            return recipe;
+        }
+
         return null;
     }
 }

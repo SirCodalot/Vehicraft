@@ -1,5 +1,6 @@
 package Vehicraft.Commands;
 
+import Vehicraft.Loader;
 import Vehicraft.Objects.Recipe;
 import Vehicraft.Setup.Messages;
 import Vehicraft.Setup.Permissions;
@@ -9,8 +10,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import sun.plugin2.message.Message;
 
-public class cmdVehicraft implements CommandExecutor {
+public class CmdVehicraft implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -34,6 +36,7 @@ public class cmdVehicraft implements CommandExecutor {
                                 ChatColor.GREEN + " +" + ChatColor.GRAY + " /vehicraft delete/remove <name> <type> ",
                                 ChatColor.GREEN + " +" + ChatColor.GRAY + " /vehicraft edit <name> <type> ",
                                 ChatColor.GREEN + " +" + ChatColor.GRAY + " /vehicraft preview/recipe <name> <type> ",
+                                ChatColor.GREEN + " +" + ChatColor.GRAY + " /vehicraft updates "
                         });
                 return true;
             }
@@ -52,7 +55,9 @@ public class cmdVehicraft implements CommandExecutor {
                             ChatColor.GREEN + " +" + ChatColor.GRAY + " /vehicraft edit <name> <type> "
                                     + ChatColor.DARK_GRAY + Permissions.COMMAND_VR_EDIT.getPermission(),
                             ChatColor.GREEN + " +" + ChatColor.GRAY + " /vehicraft preview/recipe <name> <type> "
-                                    + ChatColor.DARK_GRAY + Permissions.COMMAND_VR_PREVIEW.getPermission()
+                                    + ChatColor.DARK_GRAY + Permissions.COMMAND_VR_PREVIEW.getPermission(),
+                            ChatColor.GREEN + " +" + ChatColor.GRAY + " /vehicraft updates "
+                                    + ChatColor.DARK_GRAY + Permissions.COMMAND_VR_UPDATES.getPermission()
                     });
             return true;
         }
@@ -72,7 +77,10 @@ public class cmdVehicraft implements CommandExecutor {
                 return true;
             }
             Messages.RECIPE_LIST.sendTo(sender);
-            for (Recipe recipe : Recipe.recipes) sender.sendMessage(ChatColor.YELLOW + " - " + ChatColor.BLUE + recipe.name + ChatColor.GREEN + " " + recipe.type.toString());
+
+            Recipe.recipes.forEach(
+                    recipe -> sender.sendMessage(ChatColor.YELLOW + " - " + ChatColor.BLUE + recipe.name + ChatColor.GREEN + " " + recipe.type.toString())
+            );
 
             return true;
         }
@@ -251,6 +259,25 @@ public class cmdVehicraft implements CommandExecutor {
 
             // Opening the preview inventory for the player.
             player.openInventory(recipe.preview);
+
+            return true;
+        }
+
+        // Updates command
+        if (args[0].equalsIgnoreCase("updates")) {
+
+            // Checking if the sender has permission to use the updates command.
+            if ((sender instanceof Player) && !Permissions.COMMAND_VR_PREVIEW.hasPermission((Player) sender)) {
+                Messages.CMD_NO_PERMISSION.sendTo(sender);
+                return true;
+            }
+
+            try {
+                if (Loader.updater.checkForUpdates()) Messages.UPDATE_FOUND.sendTo(sender);
+                else Messages.UPDATE_LATEST.sendTo(sender);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             return true;
         }

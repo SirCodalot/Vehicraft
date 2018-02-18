@@ -11,6 +11,7 @@ public enum Permissions {
     COMMAND_VR_CREATE("vehicraft.command.create"),
     COMMAND_VR_DELETE("vehicraft.command.delete"),
     COMMAND_VR_PREVIEW("vehicraft.command.preview"),
+    COMMAND_VR_UPDATES("vehicraft.command.updates"),
 
     COMMAND_VAULT("vehicraft.command.vault"),
 

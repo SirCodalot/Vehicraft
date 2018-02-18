@@ -1,12 +1,13 @@
 package Vehicraft;
 
-import Vehicraft.Commands.cmdVehicraft;
-import Vehicraft.Commands.cmdVehicraftVault;
-import Vehicraft.Commands.tabVehicraft;
+import Vehicraft.Commands.CmdVehicraft;
+import Vehicraft.Commands.CmdVehicraftVault;
+import Vehicraft.Commands.TabVehicraft;
 import Vehicraft.Events.InventoryEvents;
 import Vehicraft.Events.RecipeEvents;
 import Vehicraft.Events.SignEvents;
 import Vehicraft.Objects.Recipe;
+import Vehicraft.Utils.SpigotUpdater;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -23,19 +24,23 @@ public class Loader extends JavaPlugin {
 
     private static Plugin instance;
     public static Economy econ;
+    public static SpigotUpdater updater;
 
     @Override
     public void onEnable() {
         instance = this;
 
-        // Check for Vehicraft
+        // Checking for Vehicraft
         if (!hasVehiclesEnabled()) {
             getLogger().info("Vehicles not found");
             getLogger().info("Disabling Vehicraft...");
             Bukkit.getServer().getPluginManager().disablePlugin(this);
         }
 
-        // Hook into Vault
+        // Checking for updates
+        checkForUpdates();
+
+        // Hooking into Vault
         setupEconomy();
 
         // Loading config.yml
@@ -48,9 +53,10 @@ public class Loader extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new SignEvents(), this);
 
         // Registering Commands
-        getCommand("vehicraft").setExecutor(new cmdVehicraft());
-        getCommand("vehicraft").setTabCompleter(new tabVehicraft());
-        getCommand("vehicraftvault").setExecutor(new cmdVehicraftVault());
+        getCommand("vehicraft").setExecutor(new CmdVehicraft());
+        getCommand("vehicraft").setTabCompleter(new TabVehicraft());
+
+        getCommand("vehicraftvault").setExecutor(new CmdVehicraftVault());
 
         // Loading Recipes from config.yml
         Recipe.loadRecipes();
@@ -96,5 +102,21 @@ public class Loader extends JavaPlugin {
             return;
         }
         econ = rsp.getProvider();
+    }
+
+    /*
+        Checks for new Updates
+    */
+    private void checkForUpdates() {
+        updater = new SpigotUpdater(this, 27454);
+
+        try {
+            if (updater.checkForUpdates()) getLogger().info("An update was found! Get it from: " + updater.getResourceURL());
+            else getLogger().info("You are using the latest version!");
+        } catch (Exception e) {
+            getLogger().info("Cannot check for updates: ");
+            e.printStackTrace();
+        }
+
     }
 }

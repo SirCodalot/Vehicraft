@@ -1,6 +1,6 @@
 main: Vehicraft.Loader
 name: Vehicraft
-version: 3.0
+version: 3.1
 author: SirCodalot
 depend: [Vehicles]
 softdepend: [Vault]
