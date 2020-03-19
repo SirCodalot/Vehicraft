@@ -6,6 +6,7 @@ import Vehicraft.Utils.ItemStackSerializer;
 import es.pollitoyeye.vehicles.enums.VehicleType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
@@ -83,7 +84,7 @@ public class Recipe {
         Creates and returns a shaped recipe using the result and ingredients.
     */
     public ShapedRecipe getShapedRecipe() {
-        ShapedRecipe recipe = new ShapedRecipe(result);
+        ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(Loader.getInstance(), name + type), result);
 
         recipe.shape("abc", "def", "ghi");
 
@@ -174,7 +175,7 @@ public class Recipe {
         Finds and returns a certain recipe using it's editor menu.
     */
     public static Recipe getRecipeByEditor(Inventory inventory) {
-        for (Recipe recipe : recipes) if (recipe.editor == inventory) {
+        for (Recipe recipe : recipes) if (recipe.editor.equals(inventory)) {
             return recipe;
         }
 

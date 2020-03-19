@@ -10,7 +10,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import sun.plugin2.message.Message;
+//import sun.plugin2.message.Message;
 
 public class CmdVehicraft implements CommandExecutor {
 

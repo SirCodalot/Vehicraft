@@ -13,7 +13,7 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 /*
-    This class was taken from the internet :P
+    This class was taken from the Internet :P
     I can't find the original source. If you are the creator of this class
     contact me (SirCodalot) on SpigotMC and I will give you credits.
 */
@@ -124,7 +124,7 @@ public class ItemStackSerializer {
         StringBuilder builder = new StringBuilder();
         List<String> lore = item.getItemMeta().getLore();
         for (int ind = 0; ind < lore.size(); ind++) {
-            builder.append((ind > 0 ? "|" : "") + ((String) lore.get(ind)).replace(" ", "_").replace('�', '&'));
+            builder.append((ind > 0 ? "|" : "") + lore.get(ind).replace(" ", "_").replace('�', '&'));
         }
         return builder.toString();
     }

@@ -1,7 +1,7 @@
 main: Vehicraft.Loader
 name: Vehicraft
-version: 3.1
-author: SirCodalot
+version: 3.1r1
+author: SirCodalot (Patches by Heronicola)
 depend: [Vehicles]
 softdepend: [Vault]
 description: Custom Vehicles Recipes
